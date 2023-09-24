@@ -1,9 +1,20 @@
+// import Link from 'next/link';
+import React from 'react';
+import ExampleClient from './components/ExampleClient';
+// import ExampleServer from './components/ExampleServer';
+
 export default function Home() {
+  console.log('Where do I render');
   return (
     <div>
-      <h1 className='h1-bold'>NextJs 13</h1>
-      <h2 className='h2-bold'>NextJs 13</h2>
-      <h3 className='h3-bold'>NextJs 13</h3>
+      {/* <div>
+        <Link href='/server'>Server</Link>
+      </div>
+      <div>
+        <Link href='/client'>Client</Link>
+      </div> */}
+      <ExampleClient />
+      {/* <ExampleServer /> */}
     </div>
   );
 }
