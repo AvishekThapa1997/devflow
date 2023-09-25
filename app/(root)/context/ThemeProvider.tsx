@@ -1,12 +1,7 @@
 'use client';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
-
-type Theme = 'dark' | 'light' | 'system';
-
-interface ThemeContextValue {
-  mode: Theme;
-  updateTheme: (theme: Theme) => void;
-}
+import { Theme, ThemeContextValue } from '@app/(root)/types';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
@@ -16,13 +11,31 @@ export default function ThemeProvider({
   children: React.ReactNode;
 }) {
   const [theme, setTheme] = useState<Theme>('dark');
-  const updateTheme = useCallback((theme: Theme) => {
-    setTheme(theme);
-    document.documentElement.classList.add(theme);
-  }, []);
+  const { addItemToLocalStorage, getItemFromLocalStorage } = useLocalStorage();
+  const updateTheme = useCallback(
+    (theme: Theme) => {
+      const currentThemeMode = getItemFromLocalStorage('theme');
+      if (
+        theme === 'system' ||
+        (!currentThemeMode &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark');
+        addItemToLocalStorage('theme', 'dark');
+      } else {
+        setTheme(theme);
+        addItemToLocalStorage('theme', theme);
+        document.documentElement.classList.add(theme);
+      }
+    },
+    [addItemToLocalStorage, getItemFromLocalStorage],
+  );
   useEffect(() => {
-    updateTheme('dark');
-  }, [updateTheme]);
+    updateTheme(theme);
+    return () => {
+      document.documentElement.classList.remove(theme);
+    };
+  }, [updateTheme, theme]);
 
   return (
     <ThemeContext.Provider

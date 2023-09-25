@@ -43,7 +43,9 @@ export default function RootLayout({
           }}
         >
           <ThemeProvider>
-            <main>{children}</main>
+            <main className='background-light850_dark100 relative'>
+              {children}
+            </main>
           </ThemeProvider>
         </ClerkProvider>
       </body>
