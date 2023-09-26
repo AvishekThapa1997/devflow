@@ -7,7 +7,6 @@ export default function HomeLayout({ children }: BaseProps) {
     <>
       <Navbar />
       <div className='flex'>
-        <div>Left Side Bar</div>
         <div>
           Right Side Bar
           <section className='flex min-h-screen flex-1 flex-col px-6 pb-6 pt-6 max-md:pb-14 sm:px-14'>

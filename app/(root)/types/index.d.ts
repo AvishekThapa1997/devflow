@@ -2,8 +2,8 @@ import React from 'react';
 import { BADGE_CRITERIA } from '@app/(root)/constants';
 
 export interface BaseProps {
-  children: React.ReactNode;
-  className: string;
+  children?: React.ReactNode;
+  className?: string;
 }
 
 export interface PageParams<T extends object> {

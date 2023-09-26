@@ -1,35 +1,26 @@
 import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { SignedIn, UserButton } from '@clerk/nextjs';
 import ThemeMenu from './ThemeMenu';
-
-function Navlogo() {
-  return (
-    <Link
-      href='/'
-      className='flex items-center gap-2'
-    >
-      <Image
-        src='/assets/images/site-logo.svg'
-        width={23}
-        height={23}
-        alt='DevFlow'
-      />
-      <p className='h2-bold font-spaceGrotesk text-dark-100 dark:text-light-900 capitalize max-sm:hidden'>
-        dev <span className='text-primary-500 capitalize'>overflow</span>
-      </p>
-    </Link>
-  );
-}
+import MobileNavbar from './MobileNavbar';
+import LogoImage from './LogoImage';
+import LogoText from './LogoText';
+import NavbarLogo from './NavbarLogo';
+import SearchBox from './SearchBox';
 
 export default function Navbar() {
   return (
-    <nav className='flex-between background-light900_dark200 shadow-light-300 w-full gap-5 p-4 dark:shadow-none sm:px-6'>
-      <Navlogo />
-      {/* SEARCH BOX */}
-      <div>search box</div>
-      <div className='flex-between gap-5'>
+    <nav className='flex-between background-light900_dark200 w-full gap-5 p-4 shadow-light-300 dark:shadow-none sm:px-6'>
+      <div>
+        <NavbarLogo>
+          <LogoImage />
+          <LogoText />
+        </NavbarLogo>
+      </div>
+
+      <div className='mx-auto basis-1/2 -translate-x-10 max-lg:hidden'>
+        <SearchBox />
+      </div>
+      <div className='flex items-center justify-end gap-5'>
         <ThemeMenu />
         <SignedIn>
           <UserButton
@@ -44,6 +35,7 @@ export default function Navbar() {
             }}
           />
         </SignedIn>
+        <MobileNavbar />
       </div>
     </nav>
   );
