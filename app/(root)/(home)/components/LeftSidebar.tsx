@@ -10,7 +10,7 @@ export default function LeftSidebar() {
     <aside className='background-light900_dark200 hidden w-auto  flex-col justify-between overflow-y-auto border-r p-6 px-4 shadow-light-300 dark:shadow-none sm:flex lg:w-72'>
       <NavbarContent />
       <SignedOut>
-        <div className=''>
+        <div className='flex flex-col gap-2'>
           <AuthActionLink href='/sign-in'>
             <SignInButton />
           </AuthActionLink>

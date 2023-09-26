@@ -43,7 +43,7 @@ export default function RootLayout({
           }}
         >
           <ThemeProvider>
-            <main className='background-light850_dark100 relative'>
+            <main className='background-light850_dark100 relative h-screen overflow-hidden'>
               {children}
             </main>
           </ThemeProvider>

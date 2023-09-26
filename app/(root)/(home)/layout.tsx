@@ -5,12 +5,14 @@ import LeftSidebar from './components/LeftSidebar';
 
 export default function HomeLayout({ children }: BaseProps) {
   return (
-    <div>
-      <Navbar />
-      <div className='flex'>
+    <div className='h-full'>
+      <div className='min-h-[10vh]'>
+        <Navbar />
+      </div>
+      <div className='flex min-h-[90vh]'>
         <LeftSidebar />
-        <div>
-          <section className='flex min-h-screen flex-1 flex-col px-6 pb-6 pt-6 max-md:pb-14 sm:px-14'>
+        <div className='h-full flex-1'>
+          <section className='flex h-full flex-1 flex-col px-6 pb-6 pt-6 max-md:pb-14 sm:px-14'>
             <div className='mx-auto w-full max-w-5xl'>{children}</div>
           </section>
         </div>

@@ -9,7 +9,7 @@ import SearchBox from './SearchBox';
 
 export default function Navbar() {
   return (
-    <nav className='flex-between background-light900_dark200 w-full gap-5 p-4 shadow-light-300 dark:shadow-none sm:px-6'>
+    <nav className='flex-between background-light900_dark200 h-full w-full gap-5 p-4 shadow-light-300 dark:shadow-none sm:px-6'>
       <div>
         <NavbarLogo>
           <LogoImage />
