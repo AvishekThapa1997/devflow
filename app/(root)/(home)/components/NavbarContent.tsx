@@ -7,14 +7,21 @@ import { SheetClose } from '@app/(root)/components/ui/sheet';
 import { usePathname } from 'next/navigation';
 import { cn } from '@app/(root)/lib/utils';
 
-export default function NavbarContent() {
+interface NavbarContentProps {
+  isShownForMobileNav?: boolean;
+}
+
+export default function NavbarContent({
+  isShownForMobileNav = false,
+}: NavbarContentProps) {
   const pathName = usePathname();
   return (
-    <section className='flex h-full flex-col gap-6 pt-16'>
+    <section className='flex flex-col gap-2 pt-5'>
       {sidebarLinks.map(({ imgURL, label, route }) => {
         const isActive = route === pathName;
+        const Parent = isShownForMobileNav ? SheetClose : React.Fragment;
         return (
-          <SheetClose
+          <Parent
             key={route}
             asChild
           >
@@ -41,12 +48,13 @@ export default function NavbarContent() {
                 className={cn({
                   'base-bold': isActive,
                   'base-medium': !isActive,
+                  'hidden lg:block': !isShownForMobileNav,
                 })}
               >
                 {label}
               </p>
             </Link>
-          </SheetClose>
+          </Parent>
         );
       })}
     </section>
