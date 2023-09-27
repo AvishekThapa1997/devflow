@@ -18,7 +18,7 @@ export default function Navbar() {
       </div>
 
       <div className='mx-auto basis-1/2 -translate-x-10 max-lg:hidden'>
-        <SearchBox />
+        <SearchBox placeholder='Search anyting globally' />
       </div>
       <div className='flex items-center justify-end gap-5'>
         <ThemeMenu />
