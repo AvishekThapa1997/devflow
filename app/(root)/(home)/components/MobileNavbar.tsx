@@ -42,8 +42,8 @@ export default function MobileNavbar() {
           <SheetClose asChild>
             <NavbarContent isShownForMobileNav />
           </SheetClose>
-          <div className='flex flex-col gap-2'>
-            <SignedOut>
+          <SignedOut>
+            <div className='pb-4'>
               <SheetClose asChild>
                 <AuthActionLink href='/sign-in'>
                   <SignInButton />
@@ -54,8 +54,8 @@ export default function MobileNavbar() {
                   <SignUpButton />
                 </AuthActionLink>
               </SheetClose>
-            </SignedOut>
-          </div>
+            </div>
+          </SignedOut>
         </div>
       </SheetContent>
     </Sheet>

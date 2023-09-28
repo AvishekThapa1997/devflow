@@ -13,7 +13,7 @@ export default function DataListWithHeading({
   className,
 }: DataListWithHeadingProps) {
   return (
-    <section className={cn(className)}>
+    <section className={cn('pb-6', className)}>
       <h3 className='h3-bold text-dark200_light900 capitalize'>{heading}</h3>
       <div className='mt-4'>{children}</div>
     </section>
