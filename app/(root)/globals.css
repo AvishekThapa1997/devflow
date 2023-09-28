@@ -47,6 +47,8 @@ body {
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+    --nav-height: 10vh;
+    --content-height: calc(100vh - var(--nav-height));
   }
 
   .dark {
@@ -110,7 +112,7 @@ body {
   }
 
   .markdown {
-    @apply prose prose-headings:text-dark-400 prose-h1:text-dark-300 prose-h2:text-dark-300 prose-p:text-dark-500 prose-ol:text-dark-500 prose-ul:text-dark-500 dark:prose-headings:text-white dark:prose-p:text-light-700 dark:prose-strong:text-white dark:prose-ol:text-light-700 dark:prose-ul:text-light-500 max-w-full;
+    @apply prose max-w-full prose-headings:text-dark-400 prose-h1:text-dark-300 prose-h2:text-dark-300 prose-p:text-dark-500 prose-ol:text-dark-500 prose-ul:text-dark-500 dark:prose-headings:text-white dark:prose-p:text-light-700 dark:prose-strong:text-white dark:prose-ol:text-light-700 dark:prose-ul:text-light-500;
   }
 
   .primary-gradient {
@@ -126,7 +128,7 @@ body {
   }
 
   .tab {
-    @apply bg-light-800 text-light-500 data-[state=active]:bg-primary-100 data-[state=active]:text-primary-500 dark:bg-dark-400 dark:data-[state=active]:bg-dark-300 min-h-full !important;
+    @apply min-h-full bg-light-800 text-light-500 data-[state=active]:bg-primary-100 data-[state=active]:text-primary-500 dark:bg-dark-400 dark:data-[state=active]:bg-dark-300 !important;
   }
 
   .no-focus {
@@ -151,6 +153,14 @@ body {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .nav-container {
+    height: var(--nav-height);
+  }
+
+  .content-container {
+    height: var(--content-height);
   }
 
   .custom-scrollbar::-webkit-scrollbar {

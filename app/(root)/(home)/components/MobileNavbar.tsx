@@ -32,7 +32,7 @@ export default function MobileNavbar() {
       </SheetTrigger>
       <SheetContent
         side='left'
-        className='max-w-xs'
+        className='max-w-xs overflow-y-auto'
       >
         <NavbarLogo>
           <LogoImage />
