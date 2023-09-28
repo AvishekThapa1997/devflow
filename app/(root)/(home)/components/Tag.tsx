@@ -1,22 +1,20 @@
+'use client';
 import React from 'react';
-import Link from 'next/link';
 import { BaseProps } from '@app/(root)/types';
 import { cn } from '@app/(root)/lib/utils';
-import { Badge } from '@app/(root)/components/ui/badge';
 interface TagProps extends BaseProps {
   tag: string;
-  id: string;
 }
 
-export default function Tag({ tag, id, className }: TagProps) {
+export default function Tag({ tag, className }: TagProps) {
   return (
-    <Link
-      className={cn(className)}
-      href={`/tags/${id}`}
+    <div
+      className={cn(
+        'body-medium body-semibold rounded-md border-none bg-light-800 px-4 py-2 text-sm font-light capitalize tracking-widest text-dark-500 transition-[background-color] hover:bg-slate-200 dark:bg-dark-300 dark:text-light-700 dark:hover:bg-slate-900',
+        className,
+      )}
     >
-      <Badge className='subtle-medium background-light800_dark300 text-dark500_light700 rounded-md border-none px-4 py-2 uppercase tracking-widest'>
-        {tag}
-      </Badge>
-    </Link>
+      {tag}
+    </div>
   );
 }

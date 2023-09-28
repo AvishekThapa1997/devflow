@@ -32,7 +32,7 @@ export default function MobileNavbar() {
       </SheetTrigger>
       <SheetContent
         side='left'
-        className='max-w-xs overflow-y-auto'
+        className='custom-scrollbar max-w-xs overflow-y-auto'
       >
         <NavbarLogo>
           <LogoImage />
@@ -43,7 +43,7 @@ export default function MobileNavbar() {
             <NavbarContent isShownForMobileNav />
           </SheetClose>
           <SignedOut>
-            <div className='pb-4'>
+            <div className='flex flex-col gap-4 pb-4'>
               <SheetClose asChild>
                 <AuthActionLink href='/sign-in'>
                   <SignInButton />

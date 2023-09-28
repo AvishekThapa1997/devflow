@@ -1,5 +1,5 @@
 import React from 'react';
-import Tag from './Tag';
+import LinkTag from './LinkTag';
 
 const popularTags = [
   {
@@ -39,9 +39,9 @@ export default function PopularTags() {
             key={id}
             className='body-medium flex items-center justify-between'
           >
-            <Tag
+            <LinkTag
               tag={name}
-              id={id.toString()}
+              href={`/tags/${id}`}
             />
             <p className='small-medium text-dark500_light700'>
               {totalQuestion}

@@ -2,9 +2,18 @@ import Link from 'next/link';
 import React from 'react';
 import { Button } from '../components/ui/button';
 import SearchBox from './components/SearchBox';
-import Filters from './components/Filters';
+import FilterDropdown from './components/FilterDropdown';
+import { homePageFilters } from '../constants/filter';
+import FilterTag from './components/FilterTag';
+import { PageParams } from '../types';
 
-export default function HomePage() {
+interface HomePageSearchParam {
+  filter: string;
+}
+export default function HomePage({
+  searchParams: { filter },
+}: PageParams<HomePageSearchParam>) {
+  const currentFilter = filter as string;
   return (
     <section>
       <div className='flex flex-col-reverse justify-between sm:flex-row sm:items-center'>
@@ -18,9 +27,18 @@ export default function HomePage() {
           </Button>
         </Link>
       </div>
-      <div className='mt-8 flex justify-between gap-4 sm:items-center'>
+      <div className='mt-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center'>
         <SearchBox placeholder='Search question' />
-        <Filters filters={['filter-1', 'filter-2']} />
+        <FilterDropdown
+          filters={homePageFilters}
+          className='basis-60'
+        />
+      </div>
+      <div className='mt-6 hidden md:block'>
+        <FilterTag
+          filters={homePageFilters}
+          activeFilter={currentFilter}
+        />
       </div>
     </section>
   );
