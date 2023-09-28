@@ -1,7 +1,7 @@
 import { cn } from '@app/(root)/lib/utils';
 import { BaseProps, Filter } from '@app/(root)/types';
 import React from 'react';
-import LinkTag from './LinkTag';
+import LinkTag from '../shared/components/LinkTag';
 
 interface Props extends BaseProps {
   filters: Filter[];

@@ -48,6 +48,20 @@ export interface Job {
   job_country?: string;
 }
 
+export interface Tag {
+  id: string;
+  name: string;
+}
+export interface Question {
+  id: string;
+  title: string;
+  tags: Tag[];
+  voteCount: number;
+  views: number;
+  answerCount: number;
+  author: string;
+  createdAt: string;
+}
 export interface Country {
   name: {
     common: string;

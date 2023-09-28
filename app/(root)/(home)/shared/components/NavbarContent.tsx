@@ -23,7 +23,7 @@ export default function NavbarContent({
         return (
           <Parent
             key={route}
-            asChild
+            {...(isShownForMobileNav ? { asChild: true } : {})}
           >
             <Link
               href={route}
