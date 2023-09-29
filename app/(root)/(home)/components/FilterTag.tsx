@@ -21,7 +21,7 @@ export default function FilterTag({ filters, className, activeFilter }: Props) {
             tag={name}
             href={`/?filter=${value}`}
             key={value}
-            replace={true}
+            replace={!!activeFilter}
             className='capitalize'
             tagStyle={cn(activeTagStyle)}
           />

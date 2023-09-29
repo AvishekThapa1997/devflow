@@ -52,16 +52,27 @@ export interface Tag {
   id: string;
   name: string;
 }
+
+export interface Author {
+  id: string;
+  name: string;
+  picture?: string;
+}
+
+export interface Answer {
+  id: string;
+}
 export interface Question {
   id: string;
   title: string;
   tags: Tag[];
   voteCount: number;
   views: number;
-  answerCount: number;
-  author: string;
+  answers: Answer[];
+  author: Author;
   createdAt: string;
 }
+
 export interface Country {
   name: {
     common: string;

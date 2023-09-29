@@ -16,7 +16,6 @@ export default function SearchBox({
   iconPosition = 'left',
   imgSrc = '/assets/icons/search.svg',
 }: SearchBoxProps) {
-  console.log(iconPosition);
   return (
     <div className='relative w-full'>
       <div className='background-light800_darkgradient relative flex items-center rounded-lg px-4 py-0.5 shadow-sm dark:shadow-none'>

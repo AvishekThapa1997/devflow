@@ -20,7 +20,7 @@ export default function HomePage({
       <div className='flex flex-col-reverse justify-between sm:flex-row sm:items-center'>
         <h1 className='h1-bold text-text-dark100_light900'>All Questions</h1>
         <LinkButton
-          href='/'
+          href='/ask-question'
           title='ask a question'
         />
       </div>
@@ -37,7 +37,7 @@ export default function HomePage({
           activeFilter={currentFilter}
         />
       </div>
-      <div className='mt-8'>
+      <div className='mt-8 pb-16'>
         <Questions />
       </div>
     </section>

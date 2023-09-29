@@ -14,9 +14,9 @@ export default function HomeLayout({ children }: BaseProps) {
         <div className='hidden sm:block lg:w-72'>
           <LeftSidebar />
         </div>
-        <div className='flex-1 xl:flex-[7]'>
+        <div className='flex-1  xl:flex-[7]'>
           <section className='flex h-full flex-col p-6 sm:px-12'>
-            <div className='content-container mx-auto h-full w-full max-w-5xl'>
+            <div className='content-container mx-auto h-full w-full max-w-5xl '>
               {children}
             </div>
           </section>

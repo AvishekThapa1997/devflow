@@ -14,11 +14,13 @@ export default function LinkTag({
   className,
   href,
   tagStyle = '',
+  ...linkProps
 }: Props) {
   return (
     <Link
       className={cn(className)}
       href={href}
+      {...linkProps}
     >
       <Tag
         tag={tag}
