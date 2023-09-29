@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 
 import './globals.css';
+import ThemeProvider from './context/ThemeProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,19 +32,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <ClerkProvider
-        appearance={{
-          elements: {
-            formButtonPrimary: 'primary-gradient',
-            footerActionLink:
-              'primary-text-gradient font-semibold tracking-wide hover:text-black',
-          },
-        }}
-      >
-        <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-          <main>{children}</main>
-        </body>
-      </ClerkProvider>
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+        <ClerkProvider
+          appearance={{
+            elements: {
+              formButtonPrimary: 'primary-gradient',
+              footerActionLink:
+                'primary-text-gradient font-semibold tracking-wide hover:text-black',
+            },
+          }}
+        >
+          <ThemeProvider>
+            <main className='background-light850_dark100 relative h-screen overflow-hidden'>
+              {children}
+            </main>
+          </ThemeProvider>
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

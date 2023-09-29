@@ -1,21 +1,28 @@
-import type { Config } from 'tailwindcss';
-
-const config: Config = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ['class'],
+  content: ['./app/**/*.{ts,tsx}'],
   theme: {
     container: {
       center: true,
       padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
     },
     extend: {
       colors: {
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        'accent-blue': '#1DA1F2',
         primary: {
           500: '#FF7000',
           100: '#FFF1E6',
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         dark: {
           100: '#000000',
@@ -32,11 +39,39 @@ const config: Config = {
           500: '#7B8EC8',
           400: '#858EAD',
         },
-        'accent-blue': '#1DA1F2',
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
       },
       fontFamily: {
         inter: ['var(--font-inter)'],
         spaceGrotesk: ['var(--font-spaceGrotesk)'],
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
       boxShadow: {
         'light-100':
@@ -50,17 +85,14 @@ const config: Config = {
         'auth-dark': "url('/assets/images/auth-dark.png')",
         'auth-light': "url('/assets/images/auth-light.png')",
       },
-      // screens: {
-      //   xs: '420px',
-      // },
       keyframes: {
         'accordion-down': {
-          from: { height: '0' },
+          from: { height: 0 },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+          to: { height: 0 },
         },
       },
       animation: {
@@ -71,4 +103,3 @@ const config: Config = {
   },
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 };
-export default config;
