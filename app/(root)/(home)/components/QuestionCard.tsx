@@ -11,6 +11,7 @@ import Link from 'next/link';
 import LinkTag from '../shared/components/LinkTag';
 import IconLabel from '../shared/components/IconLabel';
 import { formatNumberWithExtension } from '@app/(root)/lib/utils';
+import RenderTag from '../shared/components/RenderTag';
 
 interface Props {
   id: string;
@@ -48,7 +49,7 @@ export default function QuestionCard({
       </CardHeader>
       <CardContent>
         {tags.length > 0 ? (
-          <div className='flex flex-wrap gap-2'>
+          <RenderTag>
             {tags.map((tag) => (
               <LinkTag
                 href={`/tags/${tag.id}`}
@@ -56,7 +57,7 @@ export default function QuestionCard({
                 tag={tag.name}
               />
             ))}
-          </div>
+          </RenderTag>
         ) : null}
         <div className='mt-4'>
           <div className='md:flex-between flex flex-col gap-4 md:flex-row'>

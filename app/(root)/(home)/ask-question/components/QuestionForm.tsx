@@ -17,6 +17,7 @@ import {
 import FormInput from '../../shared/components/FormInput';
 import { ASK_QUESTION_FORM_FIELDS } from '@app/(root)/constants/form';
 import Tag from '../../shared/components/Tag';
+import RenderTag from '../../shared/components/RenderTag';
 
 export default function QuestionForm() {
   const editorRef = useRef<HTMLInputElement>(null);
@@ -83,7 +84,6 @@ export default function QuestionForm() {
         },
       }}
       renderFields={(form) => {
-        console.log({ form });
         return (
           <>
             {ASK_QUESTION_FORM_FIELDS.map(
@@ -123,7 +123,7 @@ export default function QuestionForm() {
                           {field.name === 'tags' &&
                           Array.isArray(field.value) &&
                           field.value.length > 0 ? (
-                            <div className='flex items-center gap-4'>
+                            <RenderTag>
                               {field.value.map((tag: string) => {
                                 return (
                                   <Tag
@@ -136,7 +136,7 @@ export default function QuestionForm() {
                                   />
                                 );
                               })}
-                            </div>
+                            </RenderTag>
                           ) : null}
                         </FormItem>
                       </>

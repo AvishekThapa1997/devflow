@@ -2,14 +2,22 @@ import { cn } from '@app/(root)/lib/utils';
 import { BaseProps, Filter } from '@app/(root)/types';
 import React from 'react';
 import LinkTag from '../shared/components/LinkTag';
+import { LinkProps } from 'next/link';
+import RenderTag from '../shared/components/RenderTag';
 
 interface Props extends BaseProps {
   filters: Filter[];
   activeFilter?: string;
+  a: LinkProps;
 }
-export default function FilterTag({ filters, className, activeFilter }: Props) {
+export default function FilterTag({
+  filters,
+  className,
+  activeFilter,
+  a,
+}: Props) {
   return (
-    <div className={cn('flex flex-wrap gap-2', className)}>
+    <RenderTag className={className}>
       {filters.map(({ name, value }) => {
         const isActive = activeFilter === value;
         const activeTagStyle = {
@@ -27,6 +35,6 @@ export default function FilterTag({ filters, className, activeFilter }: Props) {
           />
         );
       })}
-    </div>
+    </RenderTag>
   );
 }
