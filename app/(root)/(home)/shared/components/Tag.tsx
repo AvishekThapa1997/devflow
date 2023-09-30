@@ -2,11 +2,15 @@
 import React from 'react';
 import { BaseProps } from '@app/(root)/types';
 import { cn } from '@app/(root)/lib/utils';
+import Image from 'next/image';
 interface TagProps extends BaseProps {
   tag: string;
+  iconUrl?: string;
+  iconAlt?: string;
+  onIconClick?: () => void;
 }
 
-export default function Tag({ tag, className }: TagProps) {
+export default function Tag({ tag, iconUrl, iconAlt, onIconClick,className }: TagProps) {
   return (
     <div
       className={cn(
@@ -14,7 +18,17 @@ export default function Tag({ tag, className }: TagProps) {
         className,
       )}
     >
-      {tag}
+      <span>{tag}</span>
+      {iconUrl ? (
+        <Image
+          src={iconUrl!}
+          height={12}
+          width={12}
+          alt={iconAlt!}
+          className='cursor-pointer object-contain invert-0 dark:invert'
+          onClick={(e) => onIconClick?.()}
+        />
+      ) : null}
     </div>
   );
 }
