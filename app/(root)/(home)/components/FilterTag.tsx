@@ -1,4 +1,4 @@
-import { cn } from '@app/(root)/lib/utils';
+import { cn } from '@app/(root)/utils';
 import { BaseProps, Filter } from '@app/(root)/types';
 import React from 'react';
 import LinkTag from '../shared/components/LinkTag';

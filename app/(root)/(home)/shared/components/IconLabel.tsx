@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { cn } from '@app/(root)/lib/utils';
+import { cn } from '@app/(root)/utils';
 import Link from 'next/link';
 import QuestionPostDate from '../../components/QuestionPostDate';
 

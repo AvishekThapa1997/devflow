@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { BaseProps } from '@app/(root)/types';
-import { cn } from '@app/(root)/lib/utils';
+import { cn } from '@app/(root)/utils';
 import Image from 'next/image';
 interface TagProps extends BaseProps {
   tag: string;
@@ -10,7 +10,13 @@ interface TagProps extends BaseProps {
   onIconClick?: () => void;
 }
 
-export default function Tag({ tag, iconUrl, iconAlt, onIconClick,className }: TagProps) {
+export default function Tag({
+  tag,
+  iconUrl,
+  iconAlt,
+  onIconClick,
+  className,
+}: TagProps) {
   return (
     <div
       className={cn(

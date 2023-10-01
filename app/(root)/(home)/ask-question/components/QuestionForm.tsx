@@ -5,7 +5,7 @@ import { UseFormReturn } from 'react-hook-form';
 import BaseForm from '../../components/BaseForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import zod from 'zod';
-import { QuestionSchema } from '@app/(root)/lib/validation-schema';
+import { QuestionSchema } from '@app/(root)/validation/question-schema';
 import {
   FormControl,
   FormDescription,

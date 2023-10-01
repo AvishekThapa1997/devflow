@@ -1,5 +1,5 @@
 import { Input } from '@app/(root)/components/ui/input';
-import { cn } from '@app/(root)/lib/utils';
+import { cn } from '@app/(root)/utils';
 import React, { ComponentProps } from 'react';
 
 interface Props extends ComponentProps<typeof Input> {}

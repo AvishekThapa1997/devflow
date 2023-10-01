@@ -9,7 +9,7 @@ import {
 import { Button } from '@app/(root)/components/ui/button';
 import { Form } from '@app/(root)/components/ui/form';
 import { BaseProps } from '@app/(root)/types';
-import { cn } from '@app/(root)/lib/utils';
+import { cn } from '@app/(root)/utils';
 
 interface Props<T extends FieldValues> extends Pick<BaseProps, 'className'> {
   onSubmit: (data: T) => void;

@@ -10,7 +10,7 @@ import QuestionPostDate from './QuestionPostDate';
 import Link from 'next/link';
 import LinkTag from '../shared/components/LinkTag';
 import IconLabel from '../shared/components/IconLabel';
-import { formatNumberWithExtension } from '@app/(root)/lib/utils';
+import { formatNumberWithExtension } from '@app/(root)/utils';
 import RenderTag from '../shared/components/RenderTag';
 
 interface Props {

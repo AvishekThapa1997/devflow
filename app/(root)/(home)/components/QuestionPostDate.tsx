@@ -1,4 +1,4 @@
-import { cn, timeAgo } from '@app/(root)/lib/utils';
+import { cn, timeAgo } from '@app/(root)/utils';
 import { BaseProps } from '@app/(root)/types';
 import React from 'react';
 

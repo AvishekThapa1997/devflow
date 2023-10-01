@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { SheetClose } from '@app/(root)/components/ui/sheet';
 import { usePathname } from 'next/navigation';
-import { cn } from '@app/(root)/lib/utils';
+import { cn } from '@app/(root)/utils';
 
 interface NavbarContentProps {
   isShownForMobileNav?: boolean;

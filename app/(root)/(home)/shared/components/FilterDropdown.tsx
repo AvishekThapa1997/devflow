@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '@app/(root)/lib/utils';
+import { cn } from '@app/(root)/utils';
 import {
   Select,
   SelectContent,
@@ -14,7 +14,10 @@ import React from 'react';
 interface FilterDropdownProps extends BaseProps {
   filters: FilterType[];
 }
-export default function FilterDropdown({ filters, className }: FilterDropdownProps) {
+export default function FilterDropdown({
+  filters,
+  className,
+}: FilterDropdownProps) {
   return (
     <div className={cn('block md:hidden', className)}>
       <Select>

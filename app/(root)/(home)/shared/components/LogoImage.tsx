@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { BaseProps } from '@app/(root)/types';
-import { cn } from '@app/(root)/lib/utils';
+import { cn } from '@app/(root)/utils';
 
 export default function LogoImage({ className = '' }: BaseProps) {
   return (
