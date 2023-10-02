@@ -53,7 +53,7 @@ export interface Tag {
   name: string;
 }
 
-export interface Author {
+export interface User {
   id: string;
   name: string;
   picture?: string;
@@ -65,12 +65,13 @@ export interface Answer {
 export interface Question {
   id: string;
   title: string;
+  explanation: string;
   tags: Tag[];
   voteCount: number;
   views: number;
-  answers: Answer[];
-  author: Author;
-  createdAt: string;
+  answers?: Answer[];
+  author: User;
+  createdAt?: Date;
 }
 
 export interface Country {

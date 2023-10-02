@@ -18,11 +18,33 @@ import FormInput from '../../shared/components/FormInput';
 import { ASK_QUESTION_FORM_FIELDS } from '@app/(root)/constants/form';
 import Tag from '../../shared/components/Tag';
 import RenderTag from '../../shared/components/RenderTag';
+import { QuestionDto } from '../../dto/question-dto';
+import { createQuestion } from '../action/question-action';
+import { useRouter } from 'next/navigation';
+import tryCatchWrapper from '@app/(root)/utils/try-catch-util';
 
 export default function QuestionForm() {
+  const router = useRouter();
   const editorRef = useRef<HTMLInputElement>(null);
-  const onSubmit = (data: zod.infer<typeof QuestionSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: zod.infer<typeof QuestionSchema>) => {
+    const { error, data: questionDto } = await tryCatchWrapper<QuestionDto>(
+      async () => {
+        const { explanation, title, tags } = data;
+        const questDto: QuestionDto = {
+          explanation,
+          title,
+          tags,
+          // author: {
+          //   _id: '65197c5d069fabc42b2e118b',
+          // },
+        };
+        return createQuestion(questDto);
+      },
+    );
+    if (questionDto) {
+      router.replace('/');
+    }
+    console.log({ error });
   };
 
   const addTag = (

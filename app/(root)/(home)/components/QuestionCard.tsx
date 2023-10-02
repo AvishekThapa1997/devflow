@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@app/(root)/components/ui/card';
-import { Answer, Author, Tag } from '@app/(root)/types';
+import { Answer, User, Tag } from '@app/(root)/types';
 import React from 'react';
 import QuestionPostDate from './QuestionPostDate';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ interface Props {
   id: string;
   title: string;
   tags: Tag[];
-  author: Author;
+  author: User;
   views: number;
   voteCount: number;
   answers: Answer[];
