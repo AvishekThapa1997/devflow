@@ -18,7 +18,7 @@ import FormInput from '../../shared/components/FormInput';
 import { ASK_QUESTION_FORM_FIELDS } from '@app/(root)/constants/form';
 import Tag from '../../shared/components/Tag';
 import RenderTag from '../../shared/components/RenderTag';
-import { QuestionDto } from '../../dto/question-dto';
+import { QuestionDto } from '../../../dto/question-dto';
 import { createQuestion } from '../action/question-action';
 import { useRouter } from 'next/navigation';
 import tryCatchWrapper from '@app/(root)/utils/try-catch-util';

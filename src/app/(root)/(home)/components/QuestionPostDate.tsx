@@ -6,7 +6,6 @@ interface Props extends BaseProps {
   date: string;
 }
 export default function QuestionPostDate({ date, className }: Props) {
-  console.log(date);
   return (
     <span
       className={cn(

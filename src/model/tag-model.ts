@@ -28,7 +28,7 @@ const TagSchema = new Schema<ITag>({
     default: Date.now,
   },
 });
-
+console.log('QUESTION');
 const Tag = (models.Tag as Model<ITag>) ?? model<ITag>('Tag', TagSchema);
 
 export default Tag;

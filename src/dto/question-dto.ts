@@ -9,8 +9,8 @@ interface QuestionDto {
   upvotes?: number;
   downvotes?: number;
   tags: (TagDto | string)[];
-  author?: UserDto;
-  //   answers?: any[];
+  author?: Partial<UserDto>;
+  answers?: any[];
   createdAt?: Date;
 }
 
