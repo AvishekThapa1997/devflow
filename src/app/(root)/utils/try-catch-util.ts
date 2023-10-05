@@ -1,5 +1,5 @@
-import BaseError from '../(home)/errors/base-error';
-import ServerError from '../(home)/errors/server-error';
+import BaseError from '@src/errors/base-error';
+import ServerError from '@src/errors/server-error';
 
 async function tryCatchWrapper<T = void>(
   operation: () => T | Promise<T>,
@@ -9,6 +9,7 @@ async function tryCatchWrapper<T = void>(
     return { data: result };
   } catch (err) {
     const _err = err as BaseError;
+    console.log({ _err });
     if (_err.isOperational) {
       return { error: err as Error };
     }

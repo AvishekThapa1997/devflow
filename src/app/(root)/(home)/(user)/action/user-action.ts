@@ -1,6 +1,6 @@
 'use server';
 
-import { UserDto } from '../../dto/user-dto';
+import { UserDto } from '../../../dto/user-dto';
 
 async function createUser(userDto: UserDto) {}
 
