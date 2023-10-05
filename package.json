@@ -6,11 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "push:db": "dotenv -e .env.local -- npx prisma db push"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.24.1",
     "@hookform/resolvers": "^3.3.1",
+    "@prisma/client": "^5.3.1",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-menubar": "^1.0.3",
@@ -41,8 +43,10 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "dotenv-cli": "^7.3.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier-plugin-tailwindcss": "^0.5.4",
+    "prisma": "^5.3.1",
     "tailwindcss-animate": "^1.0.7"
   }
 }

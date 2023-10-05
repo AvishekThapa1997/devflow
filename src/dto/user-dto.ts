@@ -1,18 +1,18 @@
 import { QuestionDto } from './question-dto';
 
 interface UserDto {
-  _id?: string;
+  id?: string;
   username?: string;
   name?: string;
   authProviderId: string;
   email: string;
-  profilePictureUrl?: string;
-  bio?: string;
-  location?: string;
-  portfolioWebsite?: string;
-  reputation?: number;
-  saved?: QuestionDto[];
-  createdAt: Date;
+  profilePictureUrl?: string | null;
+  bio?: string | null;
+  location?: string | null;
+  portfolioWebsite?: string | null;
+  reputation?: number | null;
+  saved?: QuestionDto[] | null;
+  createdAt?: Date | null;
 }
 
 export { type UserDto };

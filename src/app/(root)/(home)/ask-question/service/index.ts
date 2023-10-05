@@ -1,52 +1,96 @@
 'use server';
-import { executeWithTransaction } from '@app/(root)/utils/db-util';
-import { Question, Tag } from '../../../../../model';
-import mongoose from 'mongoose';
-import { QuestionDto } from '../../../dto/question-dto';
-import tryCatchWrapper from '@app/(root)/utils/try-catch-util';
+import tryCatchWrapper from '@src/app/(root)/utils/try-catch-util';
+import { QuestionDto } from '@src/dto/question-dto';
+import { TagDto } from '@src/dto/tag-dto';
+import { prismaClient } from '@src/lib/prisma-client';
 
 async function createQuestion(
   questionDto: QuestionDto,
 ): Promise<QuestionDto | undefined | any> {
-  return await tryCatchWrapper(async () => {
-    const { title, explanation, tags } = questionDto;
-    const question = await executeWithTransaction(async (session) => {
-      const _question = await Question.default.create(
-        [
-          {
-            title,
-            explanation,
-            author: new mongoose.mongo.ObjectId('65197c5d069fabc42b2e118b'),
+  const { title, explanation, tags } = questionDto;
+  const { error, data: questionDtoResult } = await tryCatchWrapper(async () => {
+    const question = await prismaClient.question.create({
+      data: {
+        title,
+        explanation,
+        author: {
+          connect: { id: '4ab1b53a-ec2c-4e1a-b80a-deafb96519fe' },
+        },
+        tags: {
+          create: tags.map((tag) => {
+            const name = typeof tag === 'string' ? tag : tag.name;
+            return {
+              tag: {
+                connectOrCreate: {
+                  where: {
+                    name,
+                  },
+                  create: {
+                    name,
+                  },
+                },
+              },
+            };
+          }),
+        },
+      },
+      include: {
+        author: true,
+        tags: {
+          include: {
+            tag: true,
           },
-        ],
-        { session },
-      );
-      const question = _question[0];
-      const tagCreatedResults = await Promise.allSettled<typeof Tag.default>(
-        tags.map((tag) => {
-          const name = typeof tag === 'string' ? tag : tag.name;
-          return Tag.default.findOneAndUpdate(
-            { name },
-            {
-              $setOnInsert: {
-                name,
-              },
-              $push: {
-                questions: question._id,
-              },
-            },
-            { upsert: true, new: true, session },
-          );
-        }),
-      );
-      // @ts-ignore
-      const createdTags = tagCreatedResults.map((res) => res.value);
-      question.tags = createdTags;
-      await question.save();
-      return question.mapToDto();
+        },
+      },
     });
-    return question;
+    //   tags.map((tag) => {
+    //     const name = typeof tag === 'string' ? tag : tag.name;
+    //     return prismaClient.tag.upsert({
+    //       where: { name },
+    //       update: {},
+    //       create: {
+    //         name,
+    //       },
+    //     });
+    //   }),
+    // );
+    // console.log(createdTagsResult);
+    // @ts-ignore
+    // const createdTags = createdTagsResult.map(({ value }) => value);
+    // const updatedQuestion = await prismaClient.question.update({
+    //   where: {
+    //     id: question.id,
+    //   },
+    //   data: {
+    //     tags: {
+    //       set: createdTags,
+    //     },
+    //   },
+    //   include: {
+    //     author: true,
+    //     tags: {
+    //       include: {
+    //         tag: true,
+    //       },
+    //     },
+    //   },
+    // });
+    const questionDto: QuestionDto = {
+      id: question.id,
+      title: question.title,
+      explanation: question.explanation,
+      tags: question.tags.map((tag) => {
+        const tagDto: TagDto = {
+          id: tag.tagId,
+          name: tag.tag.name,
+        };
+        return tagDto;
+      }),
+      author: question.author,
+    };
+    return questionDto;
   });
+  return { error: error?.message, questionDtoResult };
 }
 
 export { createQuestion };

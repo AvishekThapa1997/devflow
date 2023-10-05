@@ -9,6 +9,7 @@ async function tryCatchWrapper<T = void>(
     return { data: result };
   } catch (err) {
     const _err = err as BaseError;
+    console.log({ _err });
     if (_err.isOperational) {
       return { error: err as Error };
     }

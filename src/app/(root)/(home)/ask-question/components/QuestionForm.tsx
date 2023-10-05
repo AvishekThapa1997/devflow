@@ -34,9 +34,6 @@ export default function QuestionForm() {
           explanation,
           title,
           tags,
-          // author: {
-          //   _id: '65197c5d069fabc42b2e118b',
-          // },
         };
         return createQuestion(questDto);
       },

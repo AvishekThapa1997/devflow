@@ -1,23 +1,34 @@
-import { authMiddleware, redirectToSignIn } from '@clerk/nextjs';
+import { authMiddleware, clerkClient, redirectToSignIn } from '@clerk/nextjs';
+import tryCatchWrapper from './app/(root)/utils/try-catch-util';
+import { prismaClientEdge } from './lib/prisma-client';
 
-// This example protects all routes including api/trpc routes
-// Please edit this to allow other routes to be public as needed.
-// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your middleware
 export default authMiddleware({
   publicRoutes: ['/', '/community'],
-  afterAuth(auth, req, evt) {
+  async afterAuth(auth, req, evt) {
     const userId = auth.userId;
     if (!userId && !auth.isPublicRoute) {
       return redirectToSignIn({ returnBackUrl: req.url });
     }
+    await tryCatchWrapper(async () => {
+      const user = await clerkClient.users.getUser(userId as string);
+      if (user) {
+        await prismaClientEdge.user.upsert({
+          where: {
+            authProviderId: userId!,
+          },
+          update: {},
+          create: {
+            email: user.emailAddresses[0].emailAddress,
+            name: `${user.firstName} ${user.lastName}`,
+            username: user.username ?? '',
+            authProviderId: user.id,
+          },
+        });
+      }
+    });
   },
 });
 
 export const config = {
   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
-  runtime: 'nodejs',
-  // unstable_allowDynamic: [
-  //   // allows a single file
-  //   './db/mongoose.ts',
-  // ],
 };

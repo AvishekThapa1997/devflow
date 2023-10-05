@@ -2,7 +2,7 @@ import { TagDto } from './tag-dto';
 import { UserDto } from './user-dto';
 
 interface QuestionDto {
-  _id?: string;
+  id?: string;
   title: string;
   explanation: string;
   views?: number;
