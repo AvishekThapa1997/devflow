@@ -1,5 +1,5 @@
 interface TagDto {
-  _id?: string;
+  id?: string;
   name: string;
 }
 
