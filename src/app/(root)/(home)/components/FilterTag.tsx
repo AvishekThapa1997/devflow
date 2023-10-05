@@ -2,20 +2,13 @@ import { cn } from '@app/(root)/utils';
 import { BaseProps, Filter } from '@app/(root)/types';
 import React from 'react';
 import LinkTag from '../shared/components/LinkTag';
-import { LinkProps } from 'next/link';
 import RenderTag from '../shared/components/RenderTag';
 
 interface Props extends BaseProps {
   filters: Filter[];
   activeFilter?: string;
-  a: LinkProps;
 }
-export default function FilterTag({
-  filters,
-  className,
-  activeFilter,
-  a,
-}: Props) {
+export default function FilterTag({ filters, className, activeFilter }: Props) {
   return (
     <RenderTag className={className}>
       {filters.map(({ name, value }) => {

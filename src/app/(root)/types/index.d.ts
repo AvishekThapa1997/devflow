@@ -49,29 +49,43 @@ export interface Job {
 }
 
 export interface Tag {
-  id: string;
+  id?: string;
   name: string;
 }
-
 export interface User {
-  id: string;
+  id?: string;
+  username?: string;
   name: string;
-  picture?: string;
+  authProviderId: string;
+  email: string;
+  profilePictureUrl?: string | null;
+  bio?: string | null;
+  location?: string | null;
+  portfolioWebsite?: string | null;
+  reputation?: number | null;
+  createdAt?: Date | null;
+}
+export interface Question {
+  id?: string;
+  title: string;
+  explanation: string;
+  views?: number;
+  upvotes?: number;
+  downvotes?: number;
+  tags: Tag[];
+  author?: Partial<User>;
+  createdAt?: Date;
 }
 
 export interface Answer {
   id: string;
 }
-export interface Question {
-  id: string;
-  title: string;
-  explanation: string;
-  tags: Tag[];
-  voteCount: number;
-  views: number;
-  answers?: Answer[];
-  author: User;
-  createdAt?: Date;
+
+export interface GetQuestionsParams {
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
+  filter?: string;
 }
 
 export interface Country {
@@ -80,6 +94,10 @@ export interface Country {
   };
 }
 
+export interface Result<T> {
+  error?: string;
+  data?: T;
+}
 export interface ParamsProps {
   params: { id: string };
 }

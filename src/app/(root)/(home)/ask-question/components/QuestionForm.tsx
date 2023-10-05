@@ -18,30 +18,28 @@ import FormInput from '../../shared/components/FormInput';
 import { ASK_QUESTION_FORM_FIELDS } from '@app/(root)/constants/form';
 import Tag from '../../shared/components/Tag';
 import RenderTag from '../../shared/components/RenderTag';
-import { QuestionDto } from '../../../dto/question-dto';
 import { createQuestion } from '../action/question-action';
 import { useRouter } from 'next/navigation';
 import tryCatchWrapper from '@app/(root)/utils/try-catch-util';
+import { Question } from '@src/app/(root)/types';
 
 export default function QuestionForm() {
   const router = useRouter();
   const editorRef = useRef<HTMLInputElement>(null);
   const onSubmit = async (data: zod.infer<typeof QuestionSchema>) => {
-    const { error, data: questionDto } = await tryCatchWrapper<QuestionDto>(
-      async () => {
-        const { explanation, title, tags } = data;
-        const questDto: QuestionDto = {
-          explanation,
-          title,
-          tags,
-        };
-        return createQuestion(questDto);
-      },
-    );
-    if (questionDto) {
-      router.replace('/');
-    }
-    console.log({ error });
+    await tryCatchWrapper(async () => {
+      const { explanation, title, tags } = data;
+      const questDto: Question = {
+        explanation,
+        title,
+        tags,
+      };
+      const { error, data: userId } = await createQuestion(questDto);
+      if (userId) {
+        router.replace('/');
+      }
+      console.log({ error });
+    });
   };
 
   const addTag = (
@@ -49,7 +47,7 @@ export default function QuestionForm() {
     form: UseFormReturn<zod.infer<typeof QuestionSchema>>,
   ) => {
     const previousTags = form.getValues('tags');
-    form.setValue('tags', [...previousTags, tag]);
+    form.setValue('tags', [...previousTags, { name: tag }]);
   };
 
   const removeTag = (
@@ -58,7 +56,7 @@ export default function QuestionForm() {
   ) => {
     const previousTags = form.getValues('tags');
     const filteredTags = previousTags.filter(
-      (previousTag) => previousTag !== tag,
+      (previousTag) => previousTag.name !== tag,
     );
     form.setValue('tags', filteredTags);
   };
@@ -83,7 +81,8 @@ export default function QuestionForm() {
         });
         return;
       }
-      if (tag.trim() !== '' && !previousTags.includes(tag)) {
+      const tagExits = previousTags.find(({ name }) => name === tag);
+      if (!tagExits) {
         addTag(tag, form);
         field.value = '';
       }
@@ -121,9 +120,9 @@ export default function QuestionForm() {
                           </FormLabel>
                           <FormControl className='mt-4'>
                             <FormInput
-                              {...(name !== 'tags'
-                                ? field
-                                : { ref: field.ref })}
+                              {...(name === 'tags'
+                                ? { ref: field.ref }
+                                : { ...field, value: field.value as string })}
                               type={type}
                               placeholder={placeholder}
                               {...(name === 'tags'
@@ -143,15 +142,15 @@ export default function QuestionForm() {
                           Array.isArray(field.value) &&
                           field.value.length > 0 ? (
                             <RenderTag>
-                              {field.value.map((tag: string) => {
+                              {field.value.map(({ name }) => {
                                 return (
                                   <Tag
-                                    key={tag}
-                                    tag={tag}
+                                    key={name}
+                                    tag={name}
                                     className='flex items-center justify-between gap-2 py-2 text-xs'
                                     iconUrl='/assets/icons/close.svg'
                                     iconAlt='close icon'
-                                    onIconClick={() => removeTag(tag, form)}
+                                    onIconClick={() => removeTag(name, form)}
                                   />
                                 );
                               })}

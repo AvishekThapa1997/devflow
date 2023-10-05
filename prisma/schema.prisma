@@ -31,7 +31,7 @@ model User {
 model Question {
   id    String  @id @default(uuid())
   title String
-  explanation String
+  explanation String @db.VarChar()
   views Int @default(0)
   downvotes Int @default(0)
   upvotes Int @default(0)

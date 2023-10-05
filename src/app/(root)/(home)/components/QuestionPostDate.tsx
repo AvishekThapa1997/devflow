@@ -3,7 +3,7 @@ import { BaseProps } from '@app/(root)/types';
 import React from 'react';
 
 interface Props extends BaseProps {
-  date: string;
+  date: string | Date;
 }
 export default function QuestionPostDate({ date, className }: Props) {
   return (
