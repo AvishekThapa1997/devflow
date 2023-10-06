@@ -76,6 +76,9 @@ async function getQuestions(
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
     const questionsDtos: Question[] = questions.map((question) => {
       const questionDto: Question = {
