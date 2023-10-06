@@ -39,7 +39,7 @@ model Question {
   tags QuestionTag[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  author User @relation(fields: [authorId],references: [id])
+  author User @relation(fields: [authorId],references: [id],onDelete: Cascade)
 }
 
 model Tag {
@@ -62,6 +62,6 @@ model UserTag {
   tagId String
   userId String
   tag Tag @relation(fields: [tagId],references: [id])
-  user User @relation(fields: [userId],references: [id])
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
   @@id([tagId,userId])
 }
