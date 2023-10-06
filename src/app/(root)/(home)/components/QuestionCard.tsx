@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@app/(root)/components/ui/card';
-import { Answer, User, Tag } from '@app/(root)/types';
+import { User, Tag } from '@app/(root)/types';
 import React from 'react';
 import QuestionPostDate from './QuestionPostDate';
 import Link from 'next/link';
@@ -14,14 +14,15 @@ import { formatNumberWithExtension } from '@app/(root)/utils';
 import RenderTag from '../shared/components/RenderTag';
 
 interface Props {
-  id: string;
+  id?: string;
   title: string;
+  explanation: string;
+  views?: number;
+  upvotes?: number;
+  downvotes?: number;
   tags: Tag[];
-  author: User;
-  views: number;
-  voteCount: number;
-  answers: Answer[];
-  createdAt: string;
+  author?: Partial<User>;
+  createdAt?: Date;
 }
 
 export default function QuestionCard({
@@ -30,15 +31,14 @@ export default function QuestionCard({
   tags,
   author,
   views,
-  answers,
-  voteCount,
+  upvotes,
   createdAt,
 }: Props) {
   return (
     <Card className='card-wrapper'>
       <CardHeader>
         <QuestionPostDate
-          date={createdAt}
+          date={createdAt!}
           className='sm:hidden'
         />
         <Link href={`/questions/${id}`}>
@@ -64,10 +64,10 @@ export default function QuestionCard({
             <div>
               <IconLabel
                 imgUrl={'/assets/icons/avatar.svg'}
-                alt={author.name}
-                value={author.name}
-                title={createdAt}
-                href={`/profile/${author.id}`}
+                alt={author?.name!}
+                value={author?.name!}
+                title={createdAt?.toString()!}
+                href={`/profile/${author?.id}`}
                 textStyle='body-medium text-dark400_light700'
                 isAuthor
               />
@@ -76,19 +76,19 @@ export default function QuestionCard({
               <IconLabel
                 imgUrl='/assets/icons/like.svg'
                 alt='upvotes'
-                value={formatNumberWithExtension(voteCount)}
+                value={formatNumberWithExtension(upvotes ?? 0)}
                 title='votes'
               />
               <IconLabel
                 imgUrl='/assets/icons/message.svg'
                 alt='message'
-                value={formatNumberWithExtension(answers.length)}
+                value={formatNumberWithExtension(0)}
                 title='answers'
               />
               <IconLabel
                 imgUrl='/assets/icons/eye.svg'
                 alt='eye'
-                value={formatNumberWithExtension(views)}
+                value={formatNumberWithExtension(views ?? 0)}
                 title='Views'
               />
             </div>

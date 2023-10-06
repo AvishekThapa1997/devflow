@@ -11,7 +11,7 @@ interface HomePageSearchParam {
   filter: string;
 }
 
-export default function HomePage({
+export default async function HomePage({
   searchParams: { filter },
 }: PageParams<HomePageSearchParam>) {
   const currentFilter = filter as string;

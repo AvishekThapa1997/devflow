@@ -49,7 +49,7 @@ export default function IconLabel({
         {href ? (
           isAuthor ? (
             <QuestionPostDate
-              date={title.toString()}
+              date={title}
               className={cn(titleStyle)}
             />
           ) : (
