@@ -1,9 +1,9 @@
 'use server';
-import { QuestionDto } from '@src/dto/question-dto';
+import { Question } from '@src/app/(root)/types';
 import * as questionService from '../service/index';
 
-async function createQuestion(questionDto: QuestionDto) {
-  return questionService.createQuestion(questionDto);
+async function createQuestion(question: Question) {
+  return questionService.createQuestion(question);
 }
 
 export { createQuestion };
