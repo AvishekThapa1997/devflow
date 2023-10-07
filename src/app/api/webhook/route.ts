@@ -1,7 +1,7 @@
 import { Webhook } from 'svix';
 import { headers } from 'next/headers';
 import { WebhookEvent } from '@clerk/nextjs/server';
-import { prismaClientEdge } from '@src/lib/prisma-client';
+// import { prismaClient } from '@src/lib/prisma-client';
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -47,41 +47,41 @@ export async function POST(req: Request) {
       status: 400,
     });
   }
-
+  console.log(evt);
   // Get the ID and type
-  const eventType = evt.type;
+  // const eventType = evt.type;
 
-  if (eventType === 'user.created' || eventType === 'user.updated') {
-    const user = evt.data;
-    await prismaClientEdge.user.upsert({
-      where: {
-        authProviderId: user.id!,
-      },
-      update: {
-        email: user.email_addresses[0].email_address,
-        name: `${user.first_name} ${user.last_name ?? ''}`,
-        username: user.username ?? '',
-        authProviderId: user.id,
-        profilePictureUrl: user.image_url,
-      },
-      create: {
-        email: user.email_addresses[0].email_address,
-        name: `${user.first_name} ${user.last_name ?? ''}`,
-        username: user.username ?? '',
-        authProviderId: user.id,
-        profilePictureUrl: user.image_url,
-      },
-    });
-  }
+  // if (eventType === 'user.created' || eventType === 'user.updated') {
+  //   const user = evt.data;
+  //   await prismaClient.user.upsert({
+  //     where: {
+  //       authProviderId: user.id!,
+  //     },
+  //     update: {
+  //       email: user.email_addresses[0].email_address,
+  //       name: `${user.first_name} ${user.last_name ?? ''}`,
+  //       username: user.username ?? '',
+  //       authProviderId: user.id,
+  //       profilePictureUrl: user.image_url,
+  //     },
+  //     create: {
+  //       email: user.email_addresses[0].email_address,
+  //       name: `${user.first_name} ${user.last_name ?? ''}`,
+  //       username: user.username ?? '',
+  //       authProviderId: user.id,
+  //       profilePictureUrl: user.image_url,
+  //     },
+  //   });
+  // }
 
-  if (eventType === 'user.deleted') {
-    const user = evt.data;
-    prismaClientEdge.user.delete({
-      where: {
-        authProviderId: user.id,
-      },
-    });
-  }
+  // if (eventType === 'user.deleted') {
+  //   const user = evt.data;
+  //   prismaClient.user.delete({
+  //     where: {
+  //       authProviderId: user.id,
+  //     },
+  //   });
+  // }
 
   return new Response('', { status: 201 });
 }
