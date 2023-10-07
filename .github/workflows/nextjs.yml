@@ -86,7 +86,6 @@ jobs:
         run: |
           npx prisma migrate deploy
           npx prisma generate
-          fi
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Static HTML export with Next.js
