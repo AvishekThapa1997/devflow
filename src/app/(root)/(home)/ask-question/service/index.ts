@@ -1,23 +1,37 @@
 'use server';
+import { isUserLoggedIn } from '@src/app/(root)/(auth)/service';
 import {
   GetQuestionsParams,
   Question,
-  Result,
+  ServerActionResult,
   Tag,
 } from '@src/app/(root)/types';
 import tryCatchWrapper from '@src/app/(root)/utils/try-catch-util';
 import { prismaClient } from '@src/lib/prisma-client';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { getUserFromAuthProviderId } from '../../user/service';
 
-async function createQuestion(questionDto: Question): Promise<Result<string>> {
+async function createQuestion(
+  questionDto: Question,
+): Promise<ServerActionResult<string>> {
   const { title, explanation, tags } = questionDto;
+  const authProviderId = await isUserLoggedIn();
+  if (!authProviderId) {
+    return redirect('/sign-in');
+  }
+  const { error: noUserFoundError, data: user } =
+    await getUserFromAuthProviderId(authProviderId);
+  if (noUserFoundError || !user) {
+    return redirect('/sign-in');
+  }
   const { error, data } = await tryCatchWrapper(async () => {
     const question = await prismaClient.question.create({
       data: {
         title,
         explanation,
         author: {
-          connect: { id: '8e50c7e5-504e-47ca-b001-75d40447d974' },
+          connect: { id: user.id },
         },
         tags: {
           create: tags.map((tag) => {
@@ -49,12 +63,15 @@ async function createQuestion(questionDto: Question): Promise<Result<string>> {
     revalidatePath('/');
     return question.id;
   });
-  return { error: error?.message, data };
+  if (error) {
+    return { error: error.message, statusCode: error.statusCode };
+  }
+  return { statusCode: 201, data };
 }
 
 async function getQuestions(
   params: GetQuestionsParams,
-): Promise<Result<Question[]>> {
+): Promise<ServerActionResult<Question[]>> {
   const { error, data } = await tryCatchWrapper(async () => {
     const questions = await prismaClient.question.findMany({
       include: {
@@ -102,6 +119,9 @@ async function getQuestions(
     });
     return questionsDtos;
   });
-  return { error: error?.message, data };
+  if (error) {
+    return { error: error.message, statusCode: error.statusCode };
+  }
+  return { statusCode: 200, data };
 }
 export { createQuestion, getQuestions };

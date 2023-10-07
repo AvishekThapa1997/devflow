@@ -3,7 +3,7 @@ import ServerError from '@src/errors/server-error';
 
 async function tryCatchWrapper<T = void>(
   operation: () => T | Promise<T>,
-): Promise<{ error?: Error; data?: Awaited<T> }> {
+): Promise<{ error?: BaseError; data?: Awaited<T> }> {
   try {
     const result = await operation();
     return { data: result };
@@ -11,7 +11,7 @@ async function tryCatchWrapper<T = void>(
     const _err = err as BaseError;
     console.log({ _err });
     if (_err.isOperational) {
-      return { error: err as Error };
+      return { error: err as BaseError };
     }
     const serverError = new ServerError();
     return { error: serverError };

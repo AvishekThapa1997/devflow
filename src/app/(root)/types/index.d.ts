@@ -94,8 +94,9 @@ export interface Country {
   };
 }
 
-export interface Result<T> {
+export interface ServerActionResult<T> {
   error?: string;
+  statusCode: number;
   data?: T;
 }
 export interface ParamsProps {
