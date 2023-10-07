@@ -5,6 +5,7 @@ const nextConfig = {
     mdxRs: true,
     serverComponentsExternalPackages: ['mongoose'],
   },
+  output: 'export',
 };
 
 module.exports = nextConfig;
