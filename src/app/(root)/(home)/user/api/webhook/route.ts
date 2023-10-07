@@ -2,6 +2,7 @@ import { Webhook } from 'svix';
 import { headers } from 'next/headers';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import { prismaClient } from '@src/lib/prisma-client';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -71,6 +72,7 @@ export async function POST(req: Request) {
         profilePictureUrl: user.image_url,
       },
     });
+    revalidatePath('/');
   }
 
   if (eventType === 'user.deleted') {
