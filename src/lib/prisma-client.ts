@@ -1,5 +1,5 @@
-import { PrismaClient as PrismaClientEdge } from '@prisma/client/edge';
-import { PrismaClient } from '@prisma/client';
-const prismaClientEdge = new PrismaClientEdge();
+import { PrismaClient } from '@prisma/client/edge';
+// import { PrismaClient } from '@prisma/client';
 const prismaClient = new PrismaClient();
-export { prismaClientEdge, prismaClient };
+// const prismaClient = new PrismaClient();
+export { prismaClient };
