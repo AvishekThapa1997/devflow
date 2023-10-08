@@ -1,15 +1,20 @@
 import { authMiddleware, redirectToSignIn } from '@clerk/nextjs';
-import { NextResponse } from 'next/server';
+// import { NextResponse } from 'next/server';
 
 export default authMiddleware({
-  publicRoutes: ['/', '/community'],
+  publicRoutes: [
+    '/',
+    '/community',
+    '/jobs',
+    '/question/:id',
+    '/tags',
+    '/tags/:id',
+    '/profile/:id',
+    /.*\/api\/webhook$/,
+  ],
   afterAuth(auth, req, evt) {
-    const path = req.url;
-    if (auth.isApiRoute && path.includes('webhook')) {
-      return NextResponse.next();
-    }
     if (!auth.userId && !auth.isPublicRoute) {
-      return redirectToSignIn({ returnBackUrl: path });
+      return redirectToSignIn({ returnBackUrl: req.url });
     }
   },
 });
