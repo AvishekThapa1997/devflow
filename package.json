@@ -28,7 +28,6 @@
     "autoprefixer": "10.4.16",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "encoding": "^0.1.13",
     "eslint": "8.50.0",
     "eslint-config-next": "13.5.2",
     "eslint-config-standard": "^17.1.0",
@@ -48,6 +47,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "dotenv-cli": "^7.3.0",
+    "encoding": "^0.1.13",
     "eslint-config-prettier": "^9.0.0",
     "prettier-plugin-tailwindcss": "^0.5.4",
     "prisma": "^5.3.1",

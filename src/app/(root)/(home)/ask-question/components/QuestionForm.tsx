@@ -125,6 +125,7 @@ export default function QuestionForm() {
                                 : { ...field, value: field.value as string })}
                               type={type}
                               placeholder={placeholder}
+                              disabled={form.formState.isSubmitting}
                               {...(name === 'tags'
                                 ? {
                                     onKeyDown: (e) => {
@@ -179,6 +180,7 @@ export default function QuestionForm() {
                         // @ts-ignore
                         editorRef.current = editor;
                       }}
+                      disabled={form.formState.isSubmitting}
                       onEditorChange={field.onChange}
                       init={{
                         height: 400,

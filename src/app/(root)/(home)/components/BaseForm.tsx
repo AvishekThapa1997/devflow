@@ -36,6 +36,7 @@ export default function BaseForm<T extends FieldValues>({
         <Button
           type='submit'
           className='primary-gradient w-fit self-center px-8 !text-light-900'
+          disabled={form.formState.isSubmitting}
         >
           Submit
         </Button>

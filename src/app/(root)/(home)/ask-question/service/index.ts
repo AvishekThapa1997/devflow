@@ -1,4 +1,4 @@
-'use server';
+import 'server-only';
 import { isUserLoggedIn } from '@src/app/(root)/(auth)/service';
 import {
   GetQuestionsParams,
@@ -8,7 +8,6 @@ import {
 } from '@src/app/(root)/types';
 import tryCatchWrapper from '@src/app/(root)/utils/try-catch-util';
 import { prismaClient } from '@src/lib/prisma-client';
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getUserFromAuthProviderId } from '../../user/service';
 
@@ -60,7 +59,6 @@ async function createQuestion(
         },
       },
     });
-    revalidatePath('/');
     return question.id;
   });
   if (error) {
