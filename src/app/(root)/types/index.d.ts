@@ -88,6 +88,12 @@ export interface GetQuestionsParams {
   filter?: string;
 }
 
+export interface PaginationParams {
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
+  filter?: string;
+}
 export interface Country {
   name: {
     common: string;
