@@ -2,7 +2,7 @@ import React from 'react';
 import SearchBox from '../shared/components/SearchBox';
 import FilterDropdown from '../shared/components/FilterDropdown';
 import { userFilters } from '../../constants/filter';
-import Community from './components/Community';
+import UserCardList from '../user/components/UserCardList';
 
 export default async function CommunityPage() {
   return (
@@ -16,7 +16,7 @@ export default async function CommunityPage() {
         />
       </div>
       <div className='mt-12'>
-        <Community />
+        <UserCardList />
       </div>
     </section>
   );

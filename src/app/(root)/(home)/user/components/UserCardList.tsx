@@ -1,9 +1,8 @@
-import React from 'react';
-import { getAllUsers } from '../../user/service';
-import Link from 'next/link';
-import UserCard from '../../user/components/UserCard';
+import { Link } from 'lucide-react';
+import { getAllUsers } from '../service';
+import UserCard from './UserCard';
 
-export default async function Community() {
+export default async function UserCardList() {
   const { data: users } = await getAllUsers({});
 
   return (
