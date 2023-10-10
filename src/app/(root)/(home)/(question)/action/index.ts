@@ -10,6 +10,7 @@ async function createQuestion(question: Question) {
     return redirect('/sign-in');
   }
   revalidatePath('/');
+  revalidatePath('/tags');
   return questionCreated;
 }
 
