@@ -8,7 +8,6 @@ import {
 } from '@src/app/(root)/types';
 import tryCatchWrapper from '@src/app/(root)/utils/try-catch-util';
 import { prismaClient } from '@src/lib/prisma-client';
-import { redirect } from 'next/navigation';
 import { getUserFromAuthProviderId } from '../../user/service';
 
 async function createQuestion(
@@ -17,12 +16,12 @@ async function createQuestion(
   const { title, explanation, tags } = questionDto;
   const authProviderId = await isUserLoggedIn();
   if (!authProviderId) {
-    return redirect('/sign-in');
+    return { statusCode: 401 };
   }
   const { error: noUserFoundError, data: user } =
     await getUserFromAuthProviderId(authProviderId);
   if (noUserFoundError || !user) {
-    return redirect('/sign-in');
+    return { statusCode: 401 };
   }
   const { error, data } = await tryCatchWrapper(async () => {
     const question = await prismaClient.question.create({
@@ -104,6 +103,7 @@ async function getQuestions(
           const _tag: Tag = {
             id: tag.tag.id,
             name: tag.tag.name,
+            noOfQuestion: question.tags.length,
           };
           return _tag;
         }),

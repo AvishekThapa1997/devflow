@@ -1,6 +1,6 @@
 import React from 'react';
 import QuestionCard from './QuestionCard';
-import NoQuestionResult from '../shared/components/NoQuestionResult';
+import NoResult from '../shared/components/NoResult';
 import { getQuestions } from '../ask-question/service';
 
 interface Props {
@@ -11,7 +11,7 @@ export default async function Questions({ filter = '' }: Props) {
   const { data: questions } = await getQuestions({});
   if (!questions || questions.length === 0) {
     return (
-      <NoQuestionResult
+      <NoResult
         title="there's no question to show"
         description='Be the first to break the silence! 🚀 Ask a Question and kickstart the
           discussion. our query could be the next big thing others learn from.

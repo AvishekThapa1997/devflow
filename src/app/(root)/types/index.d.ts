@@ -51,6 +51,7 @@ export interface Job {
 export interface Tag {
   id?: string;
   name: string;
+  noOfQuestion: number;
 }
 export interface User {
   id?: string;
