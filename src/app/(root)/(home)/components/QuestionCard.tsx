@@ -8,10 +8,11 @@ import { User, Tag } from '@app/(root)/types';
 import React from 'react';
 import QuestionPostDate from './QuestionPostDate';
 import Link from 'next/link';
-import LinkTag from '../shared/components/LinkTag';
-import IconLabel from '../shared/components/IconLabel';
 import { formatNumberWithExtension } from '@app/(root)/utils';
 import RenderTag from '../shared/components/RenderTag';
+import LinkTag from '../shared/components/LinkTag';
+import IconLabel from '../shared/components/IconLabel';
+
 
 interface Props {
   id?: string;

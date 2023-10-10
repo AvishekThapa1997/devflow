@@ -1,8 +1,9 @@
 import { cn } from '@app/(root)/utils';
 import { BaseProps, Filter } from '@app/(root)/types';
 import React from 'react';
-import LinkTag from '../shared/components/LinkTag';
 import RenderTag from '../shared/components/RenderTag';
+import LinkTag from '../shared/components/LinkTag';
+
 
 interface Props extends BaseProps {
   filters: Filter[];

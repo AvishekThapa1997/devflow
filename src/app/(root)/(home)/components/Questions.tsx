@@ -1,7 +1,7 @@
 import React from 'react';
 import QuestionCard from './QuestionCard';
-import NoResult from '../shared/components/NoResult';
 import { getQuestions } from '../(question)/service';
+import NoResult from '../shared/components/NoResult';
 
 interface Props {
   filter?: string;

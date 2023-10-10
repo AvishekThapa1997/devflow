@@ -1,6 +1,7 @@
 import React from 'react';
-import Navbar from './shared/components/Navbar';
+
 import { BaseProps } from '@app/(root)/types';
+import Navbar from './shared/components/Navbar';
 import LeftSidebar from './shared/components/LeftSidebar';
 import RightSidebar from './shared/components/RightSidebar';
 

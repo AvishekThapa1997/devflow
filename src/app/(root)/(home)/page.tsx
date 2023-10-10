@@ -1,11 +1,11 @@
 import React from 'react';
-import SearchBox from './shared/components/SearchBox';
-import FilterDropdown from './shared/components/FilterDropdown';
 import { homePageFilters } from '../constants/filter';
 import FilterTag from './components/FilterTag';
 import { PageParams } from '../types';
 import Questions from './components/Questions';
 import LinkButton from './shared/components/AskQuestion';
+import SearchBox from './shared/components/SearchBox';
+import FilterDropdown from './shared/components/FilterDropdown';
 
 interface HomePageSearchParam {
   filter: string;

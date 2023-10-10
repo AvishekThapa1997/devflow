@@ -2,7 +2,6 @@
 import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { UseFormReturn } from 'react-hook-form';
-import BaseForm from '../../../components/BaseForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import zod from 'zod';
 import { QuestionSchema } from '@app/(root)/validation/question-schema';
@@ -14,14 +13,17 @@ import {
   FormLabel,
   FormMessage,
 } from '@app/(root)/components/ui/form';
-import FormInput from '../../../shared/components/FormInput';
+
 import { ASK_QUESTION_FORM_FIELDS } from '@app/(root)/constants/form';
-import Tag from '../../../shared/components/Tag';
-import RenderTag from '../../../shared/components/RenderTag';
-import { createQuestion } from '../../action';
+
+import { createQuestion } from '../action';
 import { useRouter } from 'next/navigation';
 import tryCatchWrapper from '@app/(root)/utils/try-catch-util';
 import { Question } from '@src/app/(root)/types';
+import FormInput from '../../shared/components/FormInput';
+import RenderTag from '../../shared/components/RenderTag';
+import Tag from '../../shared/components/Tag';
+import BaseForm from '../../shared/components/BaseForm';
 
 export default function QuestionForm() {
   const router = useRouter();

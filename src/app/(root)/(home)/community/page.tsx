@@ -1,7 +1,7 @@
 import React from 'react';
+import { userFilters } from '../../constants/filter';
 import SearchBox from '../shared/components/SearchBox';
 import FilterDropdown from '../shared/components/FilterDropdown';
-import { userFilters } from '../../constants/filter';
 import UserCardList from '../user/components/UserCardList';
 
 export default async function CommunityPage() {

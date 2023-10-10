@@ -1,10 +1,12 @@
 import React from 'react';
-import SearchBox from '../shared/components/SearchBox';
-import FilterDropdown from '../shared/components/FilterDropdown';
-import { tagFilters } from '../../constants/filter';
-import NoResult from '../shared/components/NoResult';
+
 import { getAllTags } from './service';
 import TagCardList from './components/TagCardList';
+
+import { tagFilters } from '../../constants/filter';
+import SearchBox from '../shared/components/SearchBox';
+import FilterDropdown from '../shared/components/FilterDropdown';
+import NoResult from '../shared/components/NoResult';
 
 export default async function page() {
   const { data: tags } = await getAllTags({});
