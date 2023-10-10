@@ -5,7 +5,7 @@ interface Props {
   tags: Array<{
     id?: string;
     name: string;
-    noOfQuestion: number;
+    noOfQuestion?: number;
     description?: string;
   }>;
 }

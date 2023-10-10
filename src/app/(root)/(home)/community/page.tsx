@@ -6,7 +6,7 @@ import UserCardList from '../user/components/UserCardList';
 
 export default async function CommunityPage() {
   return (
-    <section className='no-scrollbar h-full'>
+    <>
       <h1 className='h1-bold text-text-dark100_light900'>All Questions</h1>
       <div className='mt-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center'>
         <SearchBox placeholder='Search for amazing friends' />
@@ -15,9 +15,9 @@ export default async function CommunityPage() {
           className='sm:basis-60'
         />
       </div>
-      <div className='mt-12'>
+      <div className='mt-12 pb-16'>
         <UserCardList />
       </div>
-    </section>
+    </>
   );
 }

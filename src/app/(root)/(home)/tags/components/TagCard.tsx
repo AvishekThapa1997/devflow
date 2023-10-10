@@ -6,7 +6,7 @@ import Tag from '../../shared/components/Tag';
 interface Props {
   id: string;
   name: string;
-  noOfQuestion: number;
+  noOfQuestion?: number;
   description?: string;
 }
 export default function TagCard({

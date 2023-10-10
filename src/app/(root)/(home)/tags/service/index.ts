@@ -9,7 +9,6 @@ async function getAllTags(params: any): Promise<ServerActionResult<Tag[]>> {
         _count: true,
       },
     });
-    console.log(tags);
     const tagResult = tags.map((tag) => {
       return {
         name: tag.name,

@@ -16,8 +16,8 @@ export default function HomeLayout({ children }: BaseProps) {
         </div>
         <div className='flex-1  xl:flex-[7]'>
           <section className='flex h-full flex-col p-6 sm:px-12'>
-            <div className='content-container no-scrollbar mx-auto h-full w-full max-w-5xl overflow-y-auto '>
-              {children}
+            <div className='content-container no-scrollbar mx-auto h-full w-full max-w-5xl overflow-y-auto'>
+              <div className='no-scrollbar h-full'>{children}</div>
             </div>
           </section>
         </div>

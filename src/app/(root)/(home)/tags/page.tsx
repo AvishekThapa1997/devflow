@@ -8,9 +8,8 @@ import TagCardList from './components/TagCardList';
 
 export default async function page() {
   const { data: tags } = await getAllTags({});
-  console.log(tags);
   return (
-    <section className='no-scrollbar h-full'>
+    <>
       <h1 className='h1-bold text-text-dark100_light900'>All Tags</h1>
       <div className='mt-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center'>
         <SearchBox placeholder='Search for tags' />
@@ -19,7 +18,7 @@ export default async function page() {
           className='sm:basis-60'
         />
       </div>
-      <div className='mt-12'>
+      <div className='mt-12 pb-16'>
         {Array.isArray(tags) && tags.length > 0 ? (
           <TagCardList tags={tags} />
         ) : (
@@ -31,6 +30,6 @@ export default async function page() {
           />
         )}
       </div>
-    </section>
+    </>
   );
 }
