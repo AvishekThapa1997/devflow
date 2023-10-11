@@ -1,10 +1,12 @@
 'use client';
-import React, { useRef } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import zod from 'zod';
-import { QuestionSchema } from '@app/(root)/validation/question-schema';
+import {
+  QuestionSchema,
+  QuestionSchemaDefinition,
+} from '@app/(root)/validation/question-schema';
 import {
   FormControl,
   FormDescription,
@@ -24,11 +26,11 @@ import FormInput from '../../shared/components/FormInput';
 import RenderTag from '../../shared/components/RenderTag';
 import Tag from '../../shared/components/Tag';
 import BaseForm from '../../shared/components/BaseForm';
+import MarkupEditor from '../../shared/components/MarkupEditor';
 
 export default function QuestionForm() {
   const router = useRouter();
-  const editorRef = useRef<HTMLInputElement>(null);
-  const onSubmit = async (data: zod.infer<typeof QuestionSchema>) => {
+  const onSubmit = async (data: QuestionSchemaDefinition) => {
     await tryCatchWrapper(async () => {
       const { explanation, title, tags } = data;
       const questDto: Question = {
@@ -65,7 +67,7 @@ export default function QuestionForm() {
   const handleInputKeyDown = (
     keyEvent: React.KeyboardEvent<HTMLInputElement>,
     field: HTMLInputElement,
-    form: UseFormReturn<zod.infer<typeof QuestionSchema>>,
+    form: UseFormReturn<QuestionSchemaDefinition>,
   ) => {
     if (keyEvent.key === 'Enter') {
       keyEvent.preventDefault();
