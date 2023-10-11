@@ -177,46 +177,11 @@ export default function QuestionForm() {
                     <span className='text-primary-500'> *</span>
                   </FormLabel>
                   <FormControl className='mt-4'>
-                    <Editor
-                      apiKey={process.env.NEXT_PUBLIC_EDITOR_KEY}
-                      onInit={(evt, editor) => {
-                        // @ts-ignore
-                        editorRef.current = editor;
-                      }}
+                    <MarkupEditor
+                      onChange={field.onChange}
                       disabled={form.formState.isSubmitting}
-                      onEditorChange={field.onChange}
-                      init={{
-                        height: 400,
-                        menubar: false,
-                        content_css: 'bg-red-400',
-                        plugins: [
-                          'advlist',
-                          'autolink',
-                          'lists',
-                          'link',
-                          'image',
-                          'charmap',
-                          'preview',
-                          'anchor',
-                          'searchreplace',
-                          'visualblocks',
-                          'codesample',
-                          'fullscreen',
-                          'insertdatetime',
-                          'media',
-                          'table',
-                          'help',
-                        ],
-                        toolbar:
-                          'undo redo | ' +
-                          'codesample | bold italic backcolor | alignleft aligncenter |' +
-                          'alignright alignjustify | bullist numlist',
-                        content_style:
-                          'body {font-family:Inter;font-size:16px;}',
-                      }}
                     />
                   </FormControl>
-                  <FormDescription>{''}</FormDescription>
                   <FormMessage className='text-red-500' />
                 </FormItem>
               )}
