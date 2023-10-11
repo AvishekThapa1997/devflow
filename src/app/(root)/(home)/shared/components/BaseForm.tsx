@@ -30,7 +30,7 @@ export default function BaseForm<T extends FieldValues>({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn(className)}
+        className={cn('flex flex-col gap-10', className)}
       >
         {renderFields(form)}
         <Button

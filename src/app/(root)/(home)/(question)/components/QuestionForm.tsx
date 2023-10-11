@@ -92,8 +92,7 @@ export default function QuestionForm() {
     }
   };
   return (
-    <BaseForm<zod.infer<typeof QuestionSchema>>
-      className='flex w-full flex-col gap-10'
+    <BaseForm<QuestionSchemaDefinition>
       onSubmit={onSubmit}
       options={{
         resolver: zodResolver(QuestionSchema),
