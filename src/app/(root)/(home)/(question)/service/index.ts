@@ -9,21 +9,20 @@ import {
 import tryCatchWrapper from '@src/app/(root)/utils/try-catch-util';
 import { prismaClient } from '@src/lib/prisma-client';
 import { getUserFromAuthProviderId } from '../../user/service';
+import UnauthorizedError from '@src/errors/unauthorized-error';
+import NotFoundError from '@src/errors/not-found-error';
 
 async function createQuestion(
   questionDto: Question,
 ): Promise<ServerActionResult<string>> {
   const { title, explanation, tags } = questionDto;
-  const authProviderId = await isUserLoggedIn();
-  if (!authProviderId) {
-    return { statusCode: 401 };
-  }
-  const { error: noUserFoundError, data: user } =
-    await getUserFromAuthProviderId(authProviderId);
-  if (noUserFoundError || !user) {
-    return { statusCode: 401 };
-  }
   const { error, data } = await tryCatchWrapper(async () => {
+    const authProviderId = await isUserLoggedIn();
+    const { error: noUserFoundError, data: user } =
+      await getUserFromAuthProviderId(authProviderId);
+    if (noUserFoundError || !user) {
+      throw new UnauthorizedError();
+    }
     const question = await prismaClient.question.create({
       data: {
         title,
@@ -122,4 +121,51 @@ async function getQuestions(
   }
   return { statusCode: 200, data };
 }
-export { createQuestion, getQuestions };
+
+async function getQuestionDetails(
+  questionId: string,
+): Promise<ServerActionResult<Question>> {
+  const { error, data } = await tryCatchWrapper(async () => {
+    const question = await prismaClient.question.findUnique({
+      where: {
+        id: questionId,
+      },
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            username: true,
+            email: true,
+            profilePictureUrl: true,
+          },
+        },
+        tags: {
+          select: {
+            tag: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!question) {
+      throw new NotFoundError(`Question with id ${questionId} not found`);
+    }
+    return {
+      ...question,
+      tags: question.tags.map(
+        (tag) => ({ id: tag.tag.id, name: tag.tag.name }) as Tag,
+      ),
+    } as Question;
+  });
+  if (error) {
+    return { statusCode: error.statusCode, error: error.message };
+  }
+  return { statusCode: 200, data };
+}
+
+export { createQuestion, getQuestions, getQuestionDetails };
