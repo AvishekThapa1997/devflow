@@ -1,6 +1,6 @@
 import { PageParams } from '@src/app/(root)/types';
 import React from 'react';
-import { getQuestionDetails } from '../../../service';
+import { getAnswers, getQuestionDetails } from '../../../service';
 import Link from 'next/link';
 import Image from 'next/image';
 import IconLabel from '@src/app/(root)/(home)/shared/components/IconLabel';
@@ -12,6 +12,9 @@ import LinkTag from '@src/app/(root)/(home)/shared/components/LinkTag';
 import { Metadata } from 'next';
 import AnswerForm from '../../../components/AnswerForm';
 import { Button } from '@src/app/(root)/components/ui/button';
+import Answers from '../../../components/Answers';
+import VotingAction from '../../../components/VotingAction';
+import { isUserLoggedIn } from '@src/app/(root)/(auth)/service';
 interface Props {
   id: string;
 }
@@ -33,15 +36,19 @@ export default async function QuestionDetailsPage({
   params,
 }: PageParams<Props>) {
   const id = params.id as string;
+  const authProviderId = await isUserLoggedIn();
   const { data: question } = await getQuestionDetails(id);
   if (!question) {
     return notFound();
   }
+  const { data: answers } = await getAnswers(
+    { questionId: id },
+    authProviderId,
+  );
   return (
     <>
       <div className='flex w-full flex-col'>
-        <div className='flex flex-col'>
-          <div>{/* Question Voting Action */}</div>
+        <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
           <Link
             href={`/profile/${question?.author?.id}`}
             className='flex items-center justify-start gap-2'
@@ -57,6 +64,7 @@ export default async function QuestionDetailsPage({
               {question?.author?.name}
             </p>
           </Link>
+          <VotingAction />
         </div>
         <h2 className='h2-semibold text-dark200_light900 mt-3.5'>
           {question?.title}
@@ -110,7 +118,11 @@ export default async function QuestionDetailsPage({
             <span>Generate an AI Answer</span>
           </Button>
         </div>
-        <AnswerForm />
+        <Answers
+          questionId={id}
+          answers={answers ?? []}
+        />
+        <AnswerForm questionId={id} />
       </div>
     </>
   );

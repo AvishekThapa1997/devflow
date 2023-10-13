@@ -75,11 +75,22 @@ export interface Question {
   downvotes?: number;
   tags: Tag[];
   author?: Partial<User>;
+  // eslint-disable-next-line no-use-before-define
+  answers?: Answer[];
   createdAt?: Date;
 }
 
 export interface Answer {
-  id: string;
+  id?: string;
+  content: string;
+  upvote?: number;
+  downvote?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  hasUpvoted?: boolean;
+  hasDownvoted?: boolean;
+  author?: Partial<User>;
+  question?: Partial<Question>;
 }
 
 export interface GetQuestionsParams {
@@ -87,6 +98,13 @@ export interface GetQuestionsParams {
   pageSize?: number;
   searchQuery?: string;
   filter?: string;
+}
+
+export interface GetAnswerParams {
+  questionId: string;
+  sortBy?: string;
+  page?: number;
+  pageSize?: number;
 }
 
 export interface PaginationParams {

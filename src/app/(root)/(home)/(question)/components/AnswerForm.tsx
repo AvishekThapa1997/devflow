@@ -1,5 +1,4 @@
 'use client';
-
 import {
   AnswerSchema,
   AnswerSchemaDefinition,
@@ -13,9 +12,31 @@ import {
 } from '@src/app/(root)/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import MarkupEditor from '../../shared/components/MarkupEditor';
+import { postAnswer } from '../action';
+import tryCatchWrapper from '@src/app/(root)/utils/try-catch-util';
+import { useRouter } from 'next/navigation';
 
-export default function AnswerForm() {
-  const onSubmit = async (data: AnswerSchemaDefinition) => {};
+interface Props {
+  questionId: string;
+}
+export default function AnswerForm({ questionId }: Props) {
+  const router = useRouter();
+  const onSubmit = async (data: AnswerSchemaDefinition) => {
+    tryCatchWrapper(async () => {
+      const { error, statusCode } = await postAnswer({
+        content: data.content,
+        question: {
+          id: questionId,
+        },
+      });
+      if (statusCode === 201) {
+        router.refresh();
+      }
+      if (error) {
+        console.error(error);
+      }
+    });
+  };
   return (
     <BaseForm<AnswerSchemaDefinition>
       onSubmit={onSubmit}

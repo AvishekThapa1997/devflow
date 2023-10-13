@@ -1,6 +1,7 @@
 import 'server-only';
-import { isUserLoggedIn } from '@src/app/(root)/(auth)/service';
 import {
+  Answer,
+  GetAnswerParams,
   GetQuestionsParams,
   Question,
   ServerActionResult,
@@ -14,10 +15,10 @@ import NotFoundError from '@src/errors/not-found-error';
 
 async function createQuestion(
   questionDto: Question,
+  authProviderId: string,
 ): Promise<ServerActionResult<string>> {
   const { title, explanation, tags } = questionDto;
   const { error, data } = await tryCatchWrapper(async () => {
-    const authProviderId = await isUserLoggedIn();
     const { error: noUserFoundError, data: user } =
       await getUserFromAuthProviderId(authProviderId);
     if (noUserFoundError || !user) {
@@ -168,4 +169,133 @@ async function getQuestionDetails(
   return { statusCode: 200, data };
 }
 
-export { createQuestion, getQuestions, getQuestionDetails };
+async function postAnswer(
+  answer: Answer,
+  authProviderId: string,
+): Promise<ServerActionResult<string>> {
+  const { error, data } = await tryCatchWrapper(async () => {
+    const { error: userError, data: user } =
+      await getUserFromAuthProviderId(authProviderId);
+    if (userError) {
+      throw userError;
+    }
+    if (!user) {
+      throw new UnauthorizedError();
+    }
+    const { data: question, error: questionError } = await getQuestionDetails(
+      answer.question?.id ?? '',
+    );
+    if (questionError) {
+      throw questionError;
+    }
+    if (!question) {
+      throw new NotFoundError(`Question not found`);
+    }
+    const answerCreated = await prismaClient.answer.create({
+      data: {
+        content: answer.content,
+        question: {
+          connect: {
+            id: answer.question?.id,
+          },
+        },
+        author: {
+          connect: {
+            id: user.id,
+          },
+        },
+      },
+    });
+    return answerCreated.id;
+  });
+  if (error) {
+    return { statusCode: error.statusCode, error: error.message };
+  }
+  return { statusCode: 201, data };
+}
+
+async function getAnswers(
+  params: GetAnswerParams,
+  authProviderId?: string,
+): Promise<ServerActionResult<Answer[]>> {
+  const { questionId } = params;
+  const { error, data } = await tryCatchWrapper(async () => {
+    let userId: string = '';
+    const question = await getQuestionDetails(questionId);
+    if (authProviderId) {
+      const { data } = await getUserFromAuthProviderId(authProviderId);
+      userId = data?.id ?? '';
+    }
+
+    if (!question) {
+      throw new NotFoundError(`Question not found.`);
+    }
+    const answers = await prismaClient.answer.findMany({
+      where: {
+        questionId,
+      },
+      select: {
+        id: true,
+        content: true,
+        createdAt: true,
+        downvote: true,
+        upvote: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+            username: true,
+            profilePictureUrl: true,
+          },
+        },
+        votes: {
+          select: {
+            flag: true,
+            userId: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return answers.map(
+      (answer) =>
+        ({
+          id: answer.id,
+          content: answer.content,
+          author: answer.author,
+          createdAt: answer.createdAt,
+          downvote: answer.downvote,
+          upvote: answer.upvote,
+          ...(userId
+            ? {
+                ...(answer.votes.some(
+                  (answer) => answer.userId === userId && answer.flag === -1,
+                )
+                  ? { hasDownvoted: true, hasUpvoted: false }
+                  : answer.votes.some(
+                      (answer) => answer.userId === userId && answer.flag === 1,
+                    )
+                  ? { hasDownvoted: false, hasUpvoted: true }
+                  : { hasDownvoted: false, hasUpvoted: false }),
+              }
+            : { hasDownvoted: false, hasUpvoted: false }),
+        }) as Answer,
+    );
+  });
+  if (error) {
+    return { statusCode: error.statusCode, error: error.message };
+  }
+  console.log(data);
+  return { statusCode: 200, data };
+}
+
+export {
+  createQuestion,
+  getQuestions,
+  getQuestionDetails,
+  postAnswer,
+  getAnswers,
+};
