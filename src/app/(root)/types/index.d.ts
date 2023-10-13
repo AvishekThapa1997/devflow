@@ -51,6 +51,7 @@ export interface Job {
 export interface Tag {
   id?: string;
   name: string;
+  noOfQuestion?: number;
 }
 export interface User {
   id?: string;
@@ -74,11 +75,22 @@ export interface Question {
   downvotes?: number;
   tags: Tag[];
   author?: Partial<User>;
+  // eslint-disable-next-line no-use-before-define
+  answers?: Answer[];
   createdAt?: Date;
 }
 
 export interface Answer {
-  id: string;
+  id?: string;
+  content: string;
+  upvote?: number;
+  downvote?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  hasUpvoted?: boolean;
+  hasDownvoted?: boolean;
+  author?: Partial<User>;
+  question?: Partial<Question>;
 }
 
 export interface GetQuestionsParams {
@@ -88,6 +100,19 @@ export interface GetQuestionsParams {
   filter?: string;
 }
 
+export interface GetAnswerParams {
+  questionId: string;
+  sortBy?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface PaginationParams {
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
+  filter?: string;
+}
 export interface Country {
   name: {
     common: string;

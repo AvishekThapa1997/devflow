@@ -1,11 +1,11 @@
 import React from 'react';
-import SearchBox from './shared/components/SearchBox';
-import FilterDropdown from './shared/components/FilterDropdown';
 import { homePageFilters } from '../constants/filter';
 import FilterTag from './components/FilterTag';
 import { PageParams } from '../types';
 import Questions from './components/Questions';
 import LinkButton from './shared/components/AskQuestion';
+import SearchBox from './shared/components/SearchBox';
+import FilterDropdown from './shared/components/FilterDropdown';
 
 interface HomePageSearchParam {
   filter: string;
@@ -16,7 +16,7 @@ export default async function HomePage({
 }: PageParams<HomePageSearchParam>) {
   const currentFilter = filter as string;
   return (
-    <section className='no-scrollbar h-full '>
+    <>
       <div className='flex flex-col-reverse justify-between sm:flex-row sm:items-center'>
         <h1 className='h1-bold text-text-dark100_light900'>All Questions</h1>
         <LinkButton
@@ -40,6 +40,6 @@ export default async function HomePage({
       <div className='mt-8 pb-16'>
         <Questions />
       </div>
-    </section>
+    </>
   );
 }

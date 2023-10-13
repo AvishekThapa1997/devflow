@@ -1,11 +1,12 @@
 'use client';
-import React, { useRef } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import BaseForm from '../../components/BaseForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import zod from 'zod';
-import { QuestionSchema } from '@app/(root)/validation/question-schema';
+import {
+  QuestionSchema,
+  QuestionSchemaDefinition,
+} from '@app/(root)/validation/question-schema';
 import {
   FormControl,
   FormDescription,
@@ -14,19 +15,22 @@ import {
   FormLabel,
   FormMessage,
 } from '@app/(root)/components/ui/form';
-import FormInput from '../../shared/components/FormInput';
+
 import { ASK_QUESTION_FORM_FIELDS } from '@app/(root)/constants/form';
-import Tag from '../../shared/components/Tag';
-import RenderTag from '../../shared/components/RenderTag';
-import { createQuestion } from '../action/question-action';
+
+import { createQuestion } from '../action';
 import { useRouter } from 'next/navigation';
 import tryCatchWrapper from '@app/(root)/utils/try-catch-util';
 import { Question } from '@src/app/(root)/types';
+import FormInput from '../../shared/components/FormInput';
+import RenderTag from '../../shared/components/RenderTag';
+import Tag from '../../shared/components/Tag';
+import BaseForm from '../../shared/components/BaseForm';
+import MarkupEditor from '../../shared/components/MarkupEditor';
 
 export default function QuestionForm() {
   const router = useRouter();
-  const editorRef = useRef<HTMLInputElement>(null);
-  const onSubmit = async (data: zod.infer<typeof QuestionSchema>) => {
+  const onSubmit = async (data: QuestionSchemaDefinition) => {
     await tryCatchWrapper(async () => {
       const { explanation, title, tags } = data;
       const questDto: Question = {
@@ -63,7 +67,7 @@ export default function QuestionForm() {
   const handleInputKeyDown = (
     keyEvent: React.KeyboardEvent<HTMLInputElement>,
     field: HTMLInputElement,
-    form: UseFormReturn<zod.infer<typeof QuestionSchema>>,
+    form: UseFormReturn<QuestionSchemaDefinition>,
   ) => {
     if (keyEvent.key === 'Enter') {
       keyEvent.preventDefault();
@@ -90,8 +94,7 @@ export default function QuestionForm() {
     }
   };
   return (
-    <BaseForm<zod.infer<typeof QuestionSchema>>
-      className='flex w-full flex-col gap-10'
+    <BaseForm<QuestionSchemaDefinition>
       onSubmit={onSubmit}
       options={{
         resolver: zodResolver(QuestionSchema),
@@ -125,6 +128,7 @@ export default function QuestionForm() {
                                 : { ...field, value: field.value as string })}
                               type={type}
                               placeholder={placeholder}
+                              disabled={form.formState.isSubmitting}
                               {...(name === 'tags'
                                 ? {
                                     onKeyDown: (e) => {
@@ -173,45 +177,11 @@ export default function QuestionForm() {
                     <span className='text-primary-500'> *</span>
                   </FormLabel>
                   <FormControl className='mt-4'>
-                    <Editor
-                      apiKey={process.env.NEXT_PUBLIC_EDITOR_KEY}
-                      onInit={(evt, editor) => {
-                        // @ts-ignore
-                        editorRef.current = editor;
-                      }}
-                      onEditorChange={field.onChange}
-                      init={{
-                        height: 400,
-                        menubar: false,
-                        content_css: 'bg-red-400',
-                        plugins: [
-                          'advlist',
-                          'autolink',
-                          'lists',
-                          'link',
-                          'image',
-                          'charmap',
-                          'preview',
-                          'anchor',
-                          'searchreplace',
-                          'visualblocks',
-                          'codesample',
-                          'fullscreen',
-                          'insertdatetime',
-                          'media',
-                          'table',
-                          'help',
-                        ],
-                        toolbar:
-                          'undo redo | ' +
-                          'codesample | bold italic backcolor | alignleft aligncenter |' +
-                          'alignright alignjustify | bullist numlist',
-                        content_style:
-                          'body {font-family:Inter;font-size:16px;}',
-                      }}
+                    <MarkupEditor
+                      onChange={field.onChange}
+                      disabled={form.formState.isSubmitting}
                     />
                   </FormControl>
-                  <FormDescription>{''}</FormDescription>
                   <FormMessage className='text-red-500' />
                 </FormItem>
               )}

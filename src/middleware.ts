@@ -6,7 +6,7 @@ export default authMiddleware({
     '/',
     '/community',
     '/jobs',
-    '/question/:id',
+    '/questions/:id',
     '/tags',
     '/tags/:id',
     '/profile/:id',

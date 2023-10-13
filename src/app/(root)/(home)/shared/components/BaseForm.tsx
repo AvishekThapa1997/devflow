@@ -30,12 +30,13 @@ export default function BaseForm<T extends FieldValues>({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn(className)}
+        className={cn('flex flex-col gap-10', className)}
       >
         {renderFields(form)}
         <Button
           type='submit'
           className='primary-gradient w-fit self-center px-8 !text-light-900'
+          disabled={form.formState.isSubmitting}
         >
           Submit
         </Button>

@@ -9,7 +9,7 @@ interface Props {
   linkTitle: string;
 }
 
-export default function NoQuestionResult({
+export default function NoResult({
   title,
   description,
   link,

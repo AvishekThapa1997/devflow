@@ -4,6 +4,7 @@ import { cn } from '@app/(root)/utils';
 import Link from 'next/link';
 import QuestionPostDate from '../../components/QuestionPostDate';
 
+
 interface Props {
   imgUrl: string;
   alt: string;

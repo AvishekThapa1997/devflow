@@ -25,7 +25,9 @@ model User {
   reputation  Int @default(0)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+  votes AnswerVote[]
   questions Question[]
+  answers Answer[]
 }
 
 model Question {
@@ -39,9 +41,32 @@ model Question {
   tags QuestionTag[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+  answers Answer[]
   author User @relation(fields: [authorId],references: [id],onDelete: Cascade)
 }
 
+model Answer {
+  id    String  @id @default(uuid())
+  content String @db.VarChar()
+  questionId String
+  authorId String
+  votes AnswerVote[]
+  createdAt  DateTime   @default(now())
+  downvote Int @default(0)
+  upvote Int @default(0)
+  updatedAt  DateTime   @updatedAt
+  author User @relation(fields: [authorId],references: [id],onDelete: Cascade)
+  question Question @relation(fields: [questionId],references: [id], onDelete:  Cascade)
+}
+
+model AnswerVote {
+  answerId String
+  userId String
+  flag Int @default(-1)
+  answer Answer @relation(fields: [answerId],references: [id])
+  user User @relation(fields: [userId],references: [id])
+  @@id([answerId,userId])
+}
 model Tag {
   id    String  @id @default(uuid())
   name String @unique

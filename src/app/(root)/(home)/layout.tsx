@@ -1,6 +1,7 @@
 import React from 'react';
-import Navbar from './shared/components/Navbar';
+
 import { BaseProps } from '@app/(root)/types';
+import Navbar from './shared/components/Navbar';
 import LeftSidebar from './shared/components/LeftSidebar';
 import RightSidebar from './shared/components/RightSidebar';
 
@@ -16,8 +17,8 @@ export default function HomeLayout({ children }: BaseProps) {
         </div>
         <div className='flex-1  xl:flex-[7]'>
           <section className='flex h-full flex-col p-6 sm:px-12'>
-            <div className='content-container no-scrollbar mx-auto h-full w-full max-w-5xl overflow-y-auto '>
-              {children}
+            <div className='content-container no-scrollbar mx-auto h-full w-full max-w-5xl overflow-y-auto'>
+              <div className='no-scrollbar h-full'>{children}</div>
             </div>
           </section>
         </div>
